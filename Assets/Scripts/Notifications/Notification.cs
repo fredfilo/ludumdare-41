@@ -4,6 +4,7 @@
     {
         public enum Type
         {
+            GAME_OVER,
             TO_PROTECT_DESTROYED
         }
     

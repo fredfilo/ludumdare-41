@@ -3,6 +3,7 @@ using Controllers;
 using Interfaces;
 using Notifications;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour, INotifiable
 {
@@ -37,6 +38,18 @@ public class GameController : MonoBehaviour, INotifiable
             GameOver();
         }
     }
+
+    public void LoadLevel(int level)
+    {
+        isPaused = false;
+        broadcaster = new Broadcaster();
+        SceneManager.LoadScene(level);
+    }
+
+    public void RetryLevel()
+    {
+        LoadLevel(SceneManager.GetActiveScene().buildIndex);
+    }
     
     // Private methods
     // -------------------------------------
@@ -48,18 +61,23 @@ public class GameController : MonoBehaviour, INotifiable
             instance = this;
         }
 
-        if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+        // Disabled the Singleton behaviour for now.
+        // The notifiable objects seems to be duplicated.
         
-        DontDestroyOnLoad(gameObject);
+        //if (instance != this)
+        //{
+        //    Destroy(gameObject);
+        //}
+        
+        //DontDestroyOnLoad(gameObject);
 
         Init();
     }
 
     private void Init()
     {
+        Debug.Log("GameController::Init");
+        
         toProtects = new List<ToProtectController>();
         
         GameObject[] toProtectsArray = GameObject.FindGameObjectsWithTag("ToProtect");
@@ -80,6 +98,7 @@ public class GameController : MonoBehaviour, INotifiable
     {
         isPaused = true;
         
-        Debug.Log("Game Over");
+        Notification notification = new Notification(Notification.Type.GAME_OVER);
+        Broadcaster.Notify(notification);
     }
 }
