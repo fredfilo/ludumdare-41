@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿using System.Collections.Generic;
+using HitEffects;
+using Interfaces;
 using Physics;
 using UnityEngine;
 
@@ -12,8 +14,7 @@ namespace Controllers
         public Vector2 direction;
         public float timeBeforeExplosion = 2.0f;
         public float speed = 1.0f;
-        public float baseDamage = 60.0f;
-        public float damageMultiplier = 1.0f;
+        public List<HitEffect> hitEffects = new List<HitEffect>();
 
         // Private methods
         // --------------------------------------------
@@ -32,13 +33,13 @@ namespace Controllers
             transform.position = position;
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionEnter2D(Collision2D collider)
         {
-            IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-            
-            if (damageable != null)
+            GameObject otherGameObject = collider.gameObject;
+
+            foreach (HitEffect hitEffect in hitEffects)
             {
-                damageable.ApplyDamage(baseDamage * damageMultiplier);
+                hitEffect.Apply(otherGameObject);
             }
             
             Destroy(gameObject);

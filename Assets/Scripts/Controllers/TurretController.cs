@@ -1,4 +1,5 @@
 ﻿using Controllers;
+using HitEffects;
 using UnityEngine;
 
 public class TurretController : MonoBehaviour
@@ -11,6 +12,11 @@ public class TurretController : MonoBehaviour
     [SerializeField] private GameObject bulletModel;
     [SerializeField] private float fireInterval = 1.0f;
     [SerializeField] private float direction = 1.0f;
+    
+    [Header("Bullet Effects")]
+    
+    [SerializeField] private float bulletDamage = 60.0f;
+    [SerializeField] private float bulletFreeze = 0.0f;
 
     private float lastFire;
     
@@ -44,5 +50,24 @@ public class TurretController : MonoBehaviour
 
         BulletController bulletController = bullet.GetComponent<BulletController>();
         bulletController.direction = new Vector2(direction, 0);
+        AddBulletEffects(bulletController);
+    }
+
+    private void AddBulletEffects(BulletController bullet)
+    {
+        if (bullet == null)
+        {
+            return;
+        }
+        
+        if (bulletDamage > 0)
+        {
+            bullet.hitEffects.Add(new DamageEffect(bulletDamage));
+        }
+        
+        if (bulletFreeze > 0)
+        {
+            bullet.hitEffects.Add(new FreezeEffect(bulletFreeze));
+        }
     }
 }

@@ -21,7 +21,11 @@ namespace Controllers
         // Public methods
         // -----------------------------------
         
-        public void ApplyDamage(float damage)
+        /// <summary>
+        /// IDamageable implementation.
+        /// </summary>
+        /// <param name="damage">The damage taken.</param>
+        public virtual void ApplyDamage(float damage)
         {
             if (damage < 0)
             {

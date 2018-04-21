@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50397961912388442}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,11 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7424e1b5128174fe4ad3df2148c1902f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityModifier: 0
-  minimumNormalY: 0.65
   direction: {x: 0, y: 0}
   timeBeforeExplosion: 1
   speed: 5
+  baseDamage: 60
+  damageMultiplier: 1
 --- !u!212 &212237510940641310
 SpriteRenderer:
   m_ObjectHideFlags: 1

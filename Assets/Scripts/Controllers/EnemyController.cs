@@ -1,17 +1,37 @@
 ﻿using System;
+using Interfaces;
 using UnityEngine;
 
 namespace Controllers
 {
-    public class EnemyController : CharacterController
+    public class EnemyController : CharacterController, IFreezable
     {
         [SerializeField] public float direction = 1.0f;
+        [SerializeField] public float freezeDuration = 0.0f;
         
+        // Public methods
+        // -----------------------------------
+        
+        /// <summary>
+        /// IFreezable implementation.
+        /// </summary>
+        /// <param name="duration">The freeze duration</param>
+        public void Freeze(float duration)
+        {
+            freezeDuration = duration;
+        }
+
         // Protected methods
         // -----------------------------------
 
         protected override float GetHorizontalMovement()
         {
+            if (freezeDuration > 0f)
+            {
+                freezeDuration -= Time.deltaTime;
+                return 0;
+            }
+            
             return 1.0f * direction;
         }
 
@@ -22,8 +42,16 @@ namespace Controllers
 
         protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
         {
-            if (hit.collider.gameObject.CompareTag("Enemy"))
+            GameObject otherGameObject = hit.collider.gameObject;
+            
+            if (otherGameObject.CompareTag("Enemy"))
             {
+                return true;
+            }
+
+            if (otherGameObject.CompareTag("Projectile"))
+            {
+                
                 return true;
             }
             
