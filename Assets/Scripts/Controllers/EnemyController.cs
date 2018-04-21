@@ -34,5 +34,10 @@ namespace Controllers
 
             return false;
         }
+
+        protected override void Die()
+        {
+            Destroy(gameObject);
+        }
     }
 }

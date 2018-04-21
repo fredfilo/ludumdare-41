@@ -87,6 +87,11 @@ namespace Physics
             
         }
         
+        protected virtual void AfterMovement()
+        {
+            
+        }
+        
         protected virtual bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
         {
             return false;
@@ -111,6 +116,7 @@ namespace Physics
         {
             targetVelocity = Vector2.zero;
             ComputeVelocity();
+            AfterMovement();
         }
 
         private void FixedUpdate()

@@ -1,9 +1,10 @@
-﻿using Physics;
+﻿using Interfaces;
+using Physics;
 using UnityEngine;
 
 namespace Controllers
 {
-    public abstract class CharacterController : MovableObject
+    public abstract class CharacterController : MovableObject, IDamageable
     {
         // Properties
         // -----------------------------------
@@ -15,10 +16,32 @@ namespace Controllers
         [SerializeField] protected float jumpSlowDown = 0.5f;
 
         protected SpriteRenderer renderer;
+        protected float health = 100.0f;
+
+        // Public methods
+        // -----------------------------------
+        
+        public void ApplyDamage(float damage)
+        {
+            if (damage < 0)
+            {
+                return; // We don't heal by applying damage.
+            }
+            
+            health -= damage;
+
+            if (health <= 0)
+            {
+                Die();
+            }
+        }
         
         // Protected methods
         // -----------------------------------
 
+        protected abstract float GetHorizontalMovement();
+        protected abstract void ComputeVelocityForJump();
+        
         protected override void ComputeVelocity()
         {
             base.ComputeVelocity();
@@ -35,8 +58,10 @@ namespace Controllers
             }
         }
 
-        protected abstract float GetHorizontalMovement();
-        protected abstract void ComputeVelocityForJump();
+        protected virtual void Die()
+        {
+            
+        }
  
         // Private methods
         // -----------------------------------
