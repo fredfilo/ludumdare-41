@@ -26,6 +26,11 @@ public class TurretController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameController.instance.isPaused)
+        {
+            return;
+        }
+        
         if (!isActive)
         {
             return;

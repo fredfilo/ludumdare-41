@@ -1,4 +1,5 @@
 ﻿using Interfaces;
+using Notifications;
 using UnityEngine;
 
 namespace Controllers
@@ -24,7 +25,11 @@ namespace Controllers
 
             if (health <= 0)
             {
-                // GameOver
+                Notification notification = new Notification(Notification.Type.TO_PROTECT_DESTROYED);
+                GameController.instance.Broadcaster.Notify(notification);
+
+                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                Destroy(collider);
             }
         }
     }

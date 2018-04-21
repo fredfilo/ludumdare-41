@@ -21,6 +21,11 @@ namespace Controllers
         
         private void Update()
         {
+            if (GameController.instance.isPaused)
+            {
+                return;
+            }
+            
             if (!isActive || enemyModel == null)
             {
                 return;

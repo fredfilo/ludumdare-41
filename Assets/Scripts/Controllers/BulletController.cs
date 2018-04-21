@@ -21,6 +21,11 @@ namespace Controllers
         
         private void Update()
         {
+            if (GameController.instance.isPaused)
+            {
+                return;
+            }
+            
             timeBeforeExplosion -= Time.deltaTime;
             if (timeBeforeExplosion <= 0)
             {

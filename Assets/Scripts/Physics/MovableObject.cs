@@ -114,6 +114,11 @@ namespace Physics
 
         private void Update()
         {
+            if (GameController.instance.isPaused)
+            {
+                return;
+            }
+            
             targetVelocity = Vector2.zero;
             ComputeVelocity();
             AfterMovement();
@@ -121,6 +126,11 @@ namespace Physics
 
         private void FixedUpdate()
         {
+            if (GameController.instance.isPaused)
+            {
+                return;
+            }
+            
             velocity += Physics2D.gravity * gravityModifier * Time.deltaTime;
             velocity.x = targetVelocity.x;
             
