@@ -81,11 +81,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e885712245b60476898004aaefb3a588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
+  isActive: 1
   bulletStart: {fileID: 1046974895629808}
   bulletModel: {fileID: 1698890053175290, guid: 9e206b12c31fe4c40b6c4b9d7e3ee88d,
     type: 2}
-  fireInterval: 1
+  fireInterval: 1.5
+  direction: -1
+  bulletDamage: 40
+  bulletFreeze: 2
 --- !u!212 &212016562118508334
 SpriteRenderer:
   m_ObjectHideFlags: 1
