@@ -5,7 +5,7 @@ namespace Controllers
 {
     public class EnemyController : CharacterController
     {
-        [SerializeField] private float direction = 1.0f;
+        [SerializeField] public float direction = 1.0f;
         
         // Protected methods
         // -----------------------------------
@@ -20,12 +20,19 @@ namespace Controllers
             // Enemies don't jump
         }
 
-        protected override void OnCollision(Vector2 normal)
+        protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
         {
+            if (hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                return true;
+            }
+            
             if (Math.Abs(normal.y) < 0.00001f)
             {
                 direction *= -1.0f;
             }
+
+            return false;
         }
     }
 }

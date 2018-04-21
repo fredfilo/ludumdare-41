@@ -49,7 +49,8 @@ namespace Physics
             // If the normal is more than minimumNormalY, we hit the ground. 
             for (int i = 0; i < collisions.Count; i++)
             {
-                Vector2 normal = collisions[i].normal;
+                RaycastHit2D collision = collisions[i];
+                Vector2 normal = collision.normal;
                 if (normal.y > minimumNormalY)
                 {
                     grounded = true;
@@ -60,6 +61,11 @@ namespace Physics
                     }
                 }
 
+                if (ShouldAllowCollision(collision, normal))
+                {
+                    continue;
+                }
+                
                 float projection = Vector2.Dot(velocity, normal);
                 if (projection < 0)
                 {
@@ -71,8 +77,6 @@ namespace Physics
                 {
                     distance = modifiedDistance;
                 }
-                
-                OnCollision(normal);
             }
             
             rigidBody.position += movement.normalized * distance;
@@ -83,9 +87,9 @@ namespace Physics
             
         }
         
-        protected virtual void OnCollision(Vector2 normal)
+        protected virtual bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
         {
-            
+            return false;
         }
         
         protected virtual void Start()
