@@ -71,12 +71,19 @@ namespace Physics
                 {
                     distance = modifiedDistance;
                 }
+                
+                OnCollision(normal);
             }
             
             rigidBody.position += movement.normalized * distance;
         }
 
         protected virtual void ComputeVelocity()
+        {
+            
+        }
+        
+        protected virtual void OnCollision(Vector2 normal)
         {
             
         }
