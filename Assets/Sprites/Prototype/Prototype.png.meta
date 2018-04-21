@@ -17,6 +17,7 @@ TextureImporter:
     21300020: Prototype_10
     21300022: Prototype_11
     21300024: Prototype_12
+    21300026: Prototype_13
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -275,6 +276,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Prototype_13
+      rect:
+        serializedVersion: 2
+        x: 96
         y: 128
         width: 32
         height: 32
