@@ -20,18 +20,9 @@ namespace Controllers
         // Protected methods
         // -----------------------------------
 
-        protected override void Start()
-        {
-            base.Start();
-
-            renderer = GetComponent<SpriteRenderer>();
-        }
-
         protected override void ComputeVelocity()
         {
             base.ComputeVelocity();
-
-            targetVelocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, 0);
             
             // Modify velocity for jump.
             if (grounded && Input.GetButtonDown("Jump"))
@@ -45,6 +36,23 @@ namespace Controllers
                     velocity.y *= jumpSlowDown;
                 }
             }
+            
+            targetVelocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, 0);
+            
+            // Check if the sprite must be flipped horizontally.
+            bool mustFlip = renderer.flipX ? (targetVelocity.x > 0) : (targetVelocity.x < 0);
+            if (mustFlip)
+            {
+                renderer.flipX = !renderer.flipX;
+            }
+        }
+ 
+        // Private methods
+        // -----------------------------------
+        
+        private void Awake()
+        {
+            renderer = GetComponent<SpriteRenderer>();
         }
     }
 }
