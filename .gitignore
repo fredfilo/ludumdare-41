@@ -36,6 +36,7 @@ sysinfo.txt
 
 .idea/
 /Assets/Plugins/Editor/Jetbrains/
+/Assets/Plugins/Editor/Jetbrains.meta
 
 # ============ #
 # OS generated #
