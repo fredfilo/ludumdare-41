@@ -41,8 +41,6 @@ public class GameController : MonoBehaviour, INotifiable
 
     public void LoadLevel(int level)
     {
-        isPaused = false;
-        broadcaster = new Broadcaster();
         SceneManager.LoadScene(level);
     }
 
@@ -77,7 +75,9 @@ public class GameController : MonoBehaviour, INotifiable
     private void Init()
     {
         Debug.Log("GameController::Init");
-        
+     
+        isPaused = false;
+        broadcaster = new Broadcaster();
         toProtects = new List<ToProtectController>();
         
         GameObject[] toProtectsArray = GameObject.FindGameObjectsWithTag("ToProtect");
