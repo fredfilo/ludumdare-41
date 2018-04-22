@@ -60,7 +60,8 @@ namespace Controllers
             {
                 freezeDuration = 2.0f;
                 damageable.ApplyDamage(damage);
-                return false;
+                animator.Play("Attack");
+                return true;
             }
             
             if (Math.Abs(normal.y) < 0.00001f)
