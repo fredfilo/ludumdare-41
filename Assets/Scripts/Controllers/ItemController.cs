@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Controllers
 {
@@ -23,6 +24,8 @@ namespace Controllers
         private void Start()
         {
             animator = GetComponent<Animator>();
+            animator.enabled = false;
+            StartCoroutine(DelayAnimation());
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -33,6 +36,17 @@ namespace Controllers
             }
             
             animator.Play("Pickup");
+        }
+
+        private IEnumerator DelayAnimation()
+        {
+            float startAt = Time.time + Random.Range(0f, 1f);
+            while (Time.time < startAt)
+            {
+                yield return null;
+            }
+
+            animator.enabled = true;
         }
     }
 }
