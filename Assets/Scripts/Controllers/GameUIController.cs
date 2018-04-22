@@ -82,7 +82,7 @@ namespace Controllers
         // Private methods
         // -----------------------------------------
 
-        private void Awake()
+        private void Start()
         {
             GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.GAME_OVER);
             GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.PLAYER_HEALTH_UPDATED);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using HitEffects;
 using Interfaces;
 using Notifications;
@@ -107,9 +108,8 @@ namespace Controllers
                 "ToProtect",
                 "DefensiveStructure"
             };
-            
-            NotifyHealth();
-            NotifyCrystalsQuantity();
+
+            StartCoroutine(MakeInitialNotifications());
         }
 
         protected override void AfterMovement()
@@ -216,6 +216,19 @@ namespace Controllers
             Debug.Log("PlayerController::NotifyCrystals");
             Notification notification = new PlayerCrystalsNotification(crystals);
             GameController.instance.Broadcaster.Notify(notification);
+        }
+
+        private IEnumerator MakeInitialNotifications(float delay = 0)
+        {
+            float startAt = Time.time + delay;
+
+            while (Time.time < startAt)
+            {
+                yield return null;
+            }
+            
+            NotifyHealth();
+            NotifyCrystalsQuantity();
         }
     }
 }
