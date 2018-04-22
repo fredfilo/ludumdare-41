@@ -547,16 +547,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114849283302390126, guid: 64f2d1853100d456c9429d6d475af5af,
-        type: 2}
-      propertyPath: fireInterval
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114849283302390126, guid: 64f2d1853100d456c9429d6d475af5af,
-        type: 2}
-      propertyPath: bulletDamage
-      value: 30
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64f2d1853100d456c9429d6d475af5af, type: 2}
   m_IsPrefabParent: 0
