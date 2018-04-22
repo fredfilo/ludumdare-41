@@ -46,6 +46,11 @@ namespace Controllers
                 return true;
             }
             
+            if (otherGameObject.CompareTag("DefensiveStructure"))
+            {
+                return true;
+            }
+            
             return false;
         }
 

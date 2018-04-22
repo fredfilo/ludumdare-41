@@ -25,6 +25,7 @@ namespace Controllers
         [SerializeField] private float bulletFreeze = 0.0f;
 
         private float lastFire;
+        private Animator animator;
     
         // Public methods
         // ------------------------------------------------------
@@ -42,8 +43,11 @@ namespace Controllers
             {
                 Notification notification = new Notification(Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED);
                 GameController.instance.Broadcaster.Notify(notification);
-
-                Destroy(GetComponent<CapsuleCollider2D>());
+                
+                EnableCollider(false);
+                
+                animator.Play("TurretIdle");
+                animator.enabled = false;
             }
             
         }
@@ -61,6 +65,11 @@ namespace Controllers
         // Private methods
         // ------------------------------------------------------
 
+        private void Start()
+        {
+            animator = GetComponent<Animator>();
+        }
+        
         private void Update()
         {
             if (GameController.instance.isPaused)
@@ -136,6 +145,8 @@ namespace Controllers
             bullet.hitIgnoreTags.Add("Player");
             bullet.hitIgnoreTags.Add("DefensiveStructure");
             AddBulletEffects(bullet);
+            
+            animator.Play("TurretAttack");
         }
 
         private void AddBulletEffects(BulletController bullet)
@@ -154,6 +165,11 @@ namespace Controllers
             {
                 bullet.hitEffects.Add(new FreezeEffect(bulletFreeze));
             }
+        }
+
+        private void EnableCollider(bool enabled)
+        {
+            GetComponent<CapsuleCollider2D>().enabled = enabled;
         }
     }
 }

@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour, INotifiable
     // -------------------------------------
     
     public bool isPaused = false;
+    public bool gameOver = false;
 
     private List<ToProtectController> toProtects;
     private Broadcaster broadcaster = new Broadcaster();
@@ -77,6 +78,7 @@ public class GameController : MonoBehaviour, INotifiable
         Debug.Log("GameController::Init");
      
         isPaused = false;
+        gameOver = false;
         broadcaster = new Broadcaster();
         toProtects = new List<ToProtectController>();
         
@@ -94,8 +96,17 @@ public class GameController : MonoBehaviour, INotifiable
         Broadcaster.RegisterNotifiable(this, Notification.Type.TO_PROTECT_DESTROYED);
     }
 
+    private void Update()
+    {
+        if (!gameOver && Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+        }
+    }
+    
     private void GameOver()
     {
+        gameOver = true;
         isPaused = true;
         
         Notification notification = new Notification(Notification.Type.GAME_OVER);
