@@ -92,12 +92,14 @@ public class TurretController : MonoBehaviour
 
         GameObject target = targets[0];
         
-        GameObject bullet = Instantiate(bulletModel, transform);
-        bullet.transform.position = bulletStart.transform.position;
+        GameObject bulletObject = Instantiate(bulletModel, transform);
+        bulletObject.transform.position = bulletStart.transform.position;
 
-        BulletController bulletController = bullet.GetComponent<BulletController>();
-        bulletController.direction = new Vector2(direction, 0);
-        AddBulletEffects(bulletController);
+        BulletController bullet = bulletObject.GetComponent<BulletController>();
+        bullet.direction = new Vector2(direction, 0);
+        bullet.hitIgnoreTags.Add("Player");
+        bullet.hitIgnoreTags.Add("ToProtect");
+        AddBulletEffects(bullet);
     }
 
     private void AddBulletEffects(BulletController bullet)
