@@ -16,6 +16,7 @@ namespace Controllers
         public float speed = 1.0f;
         public List<HitEffect> hitEffects = new List<HitEffect>();
         public List<string> hitIgnoreTags = new List<string>();
+        public bool isFriendly = false;
 
         // Private methods
         // --------------------------------------------

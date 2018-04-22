@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Interfaces;
 using Physics;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Controllers
         protected SpriteRenderer renderer;
         protected float health = 100.0f;
         protected Animator animator;
+        protected List<string> allowedCollisionTags = new List<string>();
 
         // Public methods
         // -----------------------------------

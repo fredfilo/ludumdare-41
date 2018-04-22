@@ -1,4 +1,5 @@
-﻿using HitEffects;
+﻿using System.Collections.Generic;
+using HitEffects;
 using UnityEngine;
 
 namespace Controllers
@@ -18,9 +19,28 @@ namespace Controllers
         [SerializeField] private float bulletFreeze = 0.0f;
         
         private float lastFire;
+        private List<string> allowedCollisionTags = new List<string>()
+        {
+            "Enemy",
+            "ToProtect",
+            "DefensiveStructure"
+        };
         
         // Protected methods
         // -----------------------------------
+
+        protected override void Start()
+        {
+            base.Start();
+
+            allowedCollisionTags = new List<string>()
+            {
+                "Enemy",
+                "Projectile",
+                "ToProtect",
+                "DefensiveStructure"
+            };
+        }
 
         protected override void AfterMovement()
         {
@@ -36,21 +56,11 @@ namespace Controllers
         {
             GameObject otherGameObject = hit.collider.gameObject;
 
-            if (otherGameObject.CompareTag("Projectile"))
+            if (allowedCollisionTags.Contains(otherGameObject.tag))
             {
                 return true;
             }
-            
-            if (otherGameObject.CompareTag("ToProtect"))
-            {
-                return true;
-            }
-            
-            if (otherGameObject.CompareTag("DefensiveStructure"))
-            {
-                return true;
-            }
-            
+           
             return false;
         }
 

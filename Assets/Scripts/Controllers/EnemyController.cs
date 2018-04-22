@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
 
@@ -25,9 +26,21 @@ namespace Controllers
         // Protected methods
         // -----------------------------------
 
+        protected override void Start()
+        {
+            base.Start();
+            
+            allowedCollisionTags = new List<string>()
+            {
+                "Player",
+                "Enemy",
+                "Projectile"
+            };
+        }
+
         protected override float GetHorizontalMovement()
         {
-            if (freezeDuration > 0f)
+            if (IsFrozen())
             {
                 freezeDuration -= Time.deltaTime;
                 return 0;
@@ -44,23 +57,23 @@ namespace Controllers
         protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
         {
             GameObject otherGameObject = hit.collider.gameObject;
-            
+
             if (otherGameObject.CompareTag("Enemy"))
             {
                 return true;
             }
-
-            if (otherGameObject.CompareTag("Projectile"))
-            {
-                return true;
-            }
-
+            
             IDamageable damageable = otherGameObject.GetComponent<IDamageable>();
-            if (damageable != null)
+            if (damageable != null && CanAttack())
             {
-                freezeDuration = 2.0f;
+                freezeDuration = 0.75f;
                 damageable.ApplyDamage(damage);
                 animator.Play("Attack");
+                return true;
+            }
+            
+            if (allowedCollisionTags.Contains(otherGameObject.tag))
+            {
                 return true;
             }
             
@@ -75,6 +88,16 @@ namespace Controllers
         protected override void Die()
         {
             Destroy(gameObject);
+        }
+
+        protected bool IsFrozen()
+        {
+            return freezeDuration > 0f;
+        }
+
+        protected bool CanAttack()
+        {
+            return !IsFrozen();
         }
     }
 }
