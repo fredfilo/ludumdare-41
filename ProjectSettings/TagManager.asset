@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - ToProtect
   - DefensiveStructure
+  - Item_Health
   layers:
   - Default
   - TransparentFX
