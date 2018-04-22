@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using HitEffects;
+using Interfaces;
 using Notifications;
 using UnityEngine;
 
 namespace Controllers
 {
-    public class PlayerController : CharacterController
+    public class PlayerController : CharacterController, IHealable
     {
         // Properties
         // -----------------------------------
@@ -13,6 +14,8 @@ namespace Controllers
         [SerializeField] private GameObject bulletStart;
         [SerializeField] private GameObject bulletModel;
         [SerializeField] private float fireInterval = 1.0f;
+        [SerializeField] private int hearts = 2;
+        [SerializeField] private int crystals = 0;
         
         [Header("Bullet Effects")]
     
@@ -20,12 +23,6 @@ namespace Controllers
         [SerializeField] private float bulletFreeze = 0.0f;
         
         private float lastFire;
-        private List<string> allowedCollisionTags = new List<string>()
-        {
-            "Enemy",
-            "ToProtect",
-            "DefensiveStructure"
-        };
         
         // Public methods
         // -----------------------------------
@@ -35,7 +32,55 @@ namespace Controllers
             Notification notification = new Notification(Notification.Type.PLAYER_DIED);
             GameController.instance.Broadcaster.Notify(notification);
         }
+
+        public override void ApplyDamage(float damage)
+        {
+            if (damage < 0)
+            {
+                return;
+            }
+
+            hearts--;
+
+            NotifyHealth();
+            
+            if (hearts <= 0)
+            {
+                Die();
+            }
+        }
         
+        public void Heal(float healthAmount)
+        {
+            if (healthAmount < 0)
+            {
+                return;
+            }
+
+            hearts++;
+            
+            NotifyHealth();
+        }
+        
+        public void Heal(int healthAmount)
+        {
+            if (healthAmount < 0)
+            {
+                return;
+            }
+
+            hearts += healthAmount;
+            
+            NotifyHealth();
+        }
+
+        public void ReceiveCrystals(int quantity)
+        {
+            crystals += quantity;
+            
+            NotifyCrystalsQuantity();
+        }
+
         // Protected methods
         // -----------------------------------
 
@@ -50,6 +95,9 @@ namespace Controllers
                 "ToProtect",
                 "DefensiveStructure"
             };
+            
+            NotifyHealth();
+            NotifyCrystalsQuantity();
         }
 
         protected override void AfterMovement()
@@ -142,6 +190,20 @@ namespace Controllers
             {
                 bullet.hitEffects.Add(new FreezeEffect(bulletFreeze));
             }
+        }
+
+        private void NotifyHealth()
+        {
+            Debug.Log("PlayerController::NotifyHealth");
+            Notification notification = new PlayerHealthNotification(hearts);
+            GameController.instance.Broadcaster.Notify(notification);
+        }
+        
+        private void NotifyCrystalsQuantity()
+        {
+            Debug.Log("PlayerController::NotifyCrystals");
+            Notification notification = new PlayerCrystalsNotification(crystals);
+            GameController.instance.Broadcaster.Notify(notification);
         }
     }
 }

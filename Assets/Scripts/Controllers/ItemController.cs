@@ -8,6 +8,9 @@ namespace Controllers
         // Properties
         // -----------------------------------
 
+        [SerializeField] private int health = 0;
+        [SerializeField] private int crystals = 0;
+        
         private Animator animator;
         
         // Public methods
@@ -30,9 +33,21 @@ namespace Controllers
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.gameObject.CompareTag("Player"))
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            
+            if (player == null)
             {
                 return;
+            }
+            
+            if (health > 0)
+            {
+                player.Heal(health);
+            }
+
+            if (crystals > 0)
+            {
+                player.ReceiveCrystals(crystals);
             }
             
             animator.Play("Pickup");
