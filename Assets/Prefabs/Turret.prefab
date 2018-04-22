@@ -179,7 +179,8 @@ MonoBehaviour:
     type: 2}
   fireInterval: 1.5
   direction: -1
-  health: 300
+  health: 10000
+  rank: 1
   bulletDamage: 100
   bulletFreeze: 1
 --- !u!212 &212016562118508334

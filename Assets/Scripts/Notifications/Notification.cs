@@ -10,7 +10,8 @@
             PLAYER_DIED,
             PLAYER_HEALTH_UPDATED,
             PLAYER_CRYSTALS_UPDATED,
-            REQUIRED_CRYSTALS_UPDATED
+            REQUIRED_CRYSTALS_UPDATED,
+            DEFENSE_HEALTH_UPDATED
         }
     
         // Properties

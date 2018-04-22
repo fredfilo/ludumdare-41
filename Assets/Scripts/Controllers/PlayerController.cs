@@ -122,7 +122,7 @@ namespace Controllers
             }
         }
 
-        protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
+        protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal, Vector2 movement)
         {
             GameObject otherGameObject = hit.collider.gameObject;
 

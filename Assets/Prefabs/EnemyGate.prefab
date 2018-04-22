@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  spawnInterval: 4
+  spawnInterval: 5
   spawnDirection: 1
   enemyModel: {fileID: 1492514618875828, guid: eb3db209a782a4146abee34f97f589fe, type: 2}
   facadeLeft: {fileID: 1185841206338174}

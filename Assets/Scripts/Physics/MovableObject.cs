@@ -12,7 +12,7 @@ namespace Physics
         [Header("Physics")]
         
         public float gravityModifier = 1.0f;
-        public float minimumNormalY = 0.65f;
+        public float minimumNormalY = 0.65f; // 0.65f
         
         protected Rigidbody2D rigidBody;
         protected const float minimumMovementDistance = 0.001f;
@@ -25,6 +25,7 @@ namespace Physics
         protected List<RaycastHit2D> collisions = new List<RaycastHit2D>(16);
         protected bool grounded;
         protected Vector2 groundNormal;
+        protected bool isEnemy = false;
 
         // Protected methods
         // -----------------------------------
@@ -62,7 +63,7 @@ namespace Physics
                     }
                 }
 
-                if (ShouldAllowCollision(collision, normal))
+                if (ShouldAllowCollision(collision, normal, movement))
                 {
                     continue;
                 }
@@ -79,8 +80,27 @@ namespace Physics
                     distance = modifiedDistance;
                 }
             }
+
+            if (isEnemy)
+            {
+                // TODO: Really need to fix this.
+                if (movement.y > 0)
+                {
+                    movement.y = 0;
+                }
+            }
+
+            float yBefore = rigidBody.position.y;
             
             rigidBody.position += movement.normalized * distance;
+
+            if (isEnemy && rigidBody.position.y > yBefore)
+            {
+                rigidBody.position = new Vector3(
+                    rigidBody.position.x,
+                    yBefore
+                );
+            }
         }
 
         protected virtual void ComputeVelocity()
@@ -93,7 +113,7 @@ namespace Physics
             
         }
         
-        protected virtual bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
+        protected virtual bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal, Vector2 movement)
         {
             return false;
         }

@@ -10,6 +10,8 @@ namespace Controllers
         [SerializeField] public float direction = 1.0f;
         [SerializeField] public float freezeDuration = 0.0f;
         [SerializeField] public float damage = 50.0f;
+
+        private bool isAttacking;
         
         // Public methods
         // -----------------------------------
@@ -29,12 +31,15 @@ namespace Controllers
         protected override void Start()
         {
             base.Start();
+
+            isEnemy = true;
             
             allowedCollisionTags = new List<string>()
             {
                 "Player",
                 "Enemy",
-                "Projectile"
+                "Projectile",
+                "ToProtect"
             };
         }
 
@@ -64,7 +69,7 @@ namespace Controllers
             }
         }
 
-        protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
+        protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal, Vector2 movement)
         {
             GameObject otherGameObject = hit.collider.gameObject;
 
@@ -73,12 +78,15 @@ namespace Controllers
                 return true;
             }
             
+            isAttacking = false;
+            
             IDamageable damageable = otherGameObject.GetComponent<IDamageable>();
             if (damageable != null && CanAttack())
             {
                 freezeDuration = 0.75f;
                 damageable.ApplyDamage(damage);
                 animator.Play("Attack");
+                isAttacking = true;
                 return true;
             }
             
@@ -87,7 +95,7 @@ namespace Controllers
                 return true;
             }
             
-            if (Math.Abs(normal.y) < 0.00001f)
+            if (!isAttacking && Math.Abs(normal.y) < 0.00001f)
             {
                 direction *= -1.0f;
             }

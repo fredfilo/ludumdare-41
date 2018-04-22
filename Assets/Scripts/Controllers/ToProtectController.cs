@@ -10,6 +10,8 @@ namespace Controllers
         // ------------------------------------
 
         public float health = 100.0f;
+
+        private float maxHealth;
     
         // Public methods
         // ------------------------------------
@@ -23,14 +25,25 @@ namespace Controllers
 
             health -= damage;
 
+            Notification notification = new DefenseHealthNotification(health, maxHealth, "Tower", 1);
+            GameController.instance.Broadcaster.Notify(notification);
+            
             if (health <= 0)
             {
-                Notification notification = new Notification(Notification.Type.TO_PROTECT_DESTROYED);
+                notification = new DefenseDestroyedNotification("Tower", 1);
                 GameController.instance.Broadcaster.Notify(notification);
 
                 BoxCollider2D collider = GetComponent<BoxCollider2D>();
                 Destroy(collider);
             }
+        }
+        
+        // Private methods
+        // ----------------------------------
+
+        private void Start()
+        {
+            maxHealth = health;
         }
     }
 }

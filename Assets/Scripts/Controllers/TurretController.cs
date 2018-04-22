@@ -18,6 +18,7 @@ namespace Controllers
         [SerializeField] private float fireInterval = 1.0f;
         [SerializeField] private float direction = 1.0f;
         [SerializeField] private float health = 1.0f;
+        [SerializeField] private int rank = 1;
     
         [Header("Bullet Effects")]
     
@@ -26,6 +27,7 @@ namespace Controllers
 
         private float lastFire;
         private Animator animator;
+        private float maxHealth;
     
         // Public methods
         // ------------------------------------------------------
@@ -39,9 +41,12 @@ namespace Controllers
 
             health -= damage;
 
+            Notification notification = new DefenseHealthNotification(health, maxHealth, "Turret", rank);
+            GameController.instance.Broadcaster.Notify(notification);
+            
             if (health <= 0)
             {
-                Notification notification = new Notification(Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED);
+                notification = new DefenseDestroyedNotification("Turret", rank);
                 GameController.instance.Broadcaster.Notify(notification);
                 
                 EnableCollider(false);
@@ -70,6 +75,7 @@ namespace Controllers
         private void Start()
         {
             animator = GetComponent<Animator>();
+            maxHealth = health;
         }
         
         private void Update()

@@ -20,6 +20,8 @@ namespace Controllers
 
         [SerializeField] private GameObject explosionModel;
 
+        private bool isActive = true;
+
         // Private methods
         // --------------------------------------------
 
@@ -38,7 +40,8 @@ namespace Controllers
             timeBeforeExplosion -= Time.deltaTime;
             if (timeBeforeExplosion <= 0)
             {
-                Destroy(gameObject);
+                Explode();
+                return;
             }
             
             Vector3 position = transform.position;
@@ -49,6 +52,11 @@ namespace Controllers
 
         private void OnCollisionEnter2D(Collision2D collider)
         {
+            if (!isActive)
+            {
+                return;
+            }
+            
             GameObject otherGameObject = collider.gameObject;
 
             if (hitIgnoreTags.Contains(otherGameObject.tag))
@@ -60,6 +68,8 @@ namespace Controllers
             {
                 hitEffect.Apply(otherGameObject);
             }
+
+            isActive = false;
             
             Explode();
         }

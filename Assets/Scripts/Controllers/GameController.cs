@@ -41,9 +41,13 @@ namespace Controllers
     
         public void OnNotification(Notification notification)
         {
-            if (notification.type == Notification.Type.TO_PROTECT_DESTROYED)
+            if (notification.type == Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED)
             {
-                GameOver();
+                DefenseDestroyedNotification destroyedNotification = notification as DefenseDestroyedNotification;
+                if (destroyedNotification != null && destroyedNotification.defenseType.Equals("Tower"))
+                {
+                    GameOver();
+                }
             }
         
             if (notification.type == Notification.Type.PLAYER_DIED)
@@ -106,7 +110,7 @@ namespace Controllers
             }
         
             // Notifications
-            Broadcaster.RegisterNotifiable(this, Notification.Type.TO_PROTECT_DESTROYED);
+            Broadcaster.RegisterNotifiable(this, Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED);
             Broadcaster.RegisterNotifiable(this, Notification.Type.PLAYER_DIED);
 
             StartCoroutine(FollowPlayer(3.0f));
