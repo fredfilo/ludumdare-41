@@ -39,18 +39,23 @@ namespace Controllers
             {
                 return;
             }
+
+            bool canPickup = true;
             
             if (health > 0)
             {
-                player.Heal(health);
+                canPickup &= player.Heal(health);
             }
 
             if (crystals > 0)
             {
-                player.ReceiveCrystals(crystals);
+                canPickup &= player.ReceiveCrystals(crystals);
             }
-            
-            animator.Play("Pickup");
+
+            if (canPickup)
+            {
+                animator.Play("Pickup");
+            }
         }
 
         private IEnumerator DelayAnimation()

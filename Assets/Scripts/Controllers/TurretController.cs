@@ -52,14 +52,16 @@ namespace Controllers
             
         }
 
-        public void Heal(float healthAmount)
+        public bool Heal(float healthAmount)
         {
             if (healthAmount < 0)
             {
-                return;
+                return false;
             }
 
             health += healthAmount;
+
+            return true;
         }
         
         // Private methods

@@ -14,7 +14,8 @@ namespace Controllers
         [SerializeField] private GameObject bulletStart;
         [SerializeField] private GameObject bulletModel;
         [SerializeField] private float fireInterval = 1.0f;
-        [SerializeField] private int hearts = 2;
+        [SerializeField] private int hearts = 1;
+        [SerializeField] private int maxHearts = 3;
         [SerializeField] private int crystals = 0;
         
         [Header("Bullet Effects")]
@@ -50,35 +51,46 @@ namespace Controllers
             }
         }
         
-        public void Heal(float healthAmount)
+        public bool Heal(float healthAmount)
         {
             if (healthAmount < 0)
             {
-                return;
+                return false;
             }
 
             hearts++;
             
             NotifyHealth();
+
+            return true;
         }
         
-        public void Heal(int healthAmount)
+        public bool Heal(int healthAmount)
         {
             if (healthAmount < 0)
             {
-                return;
+                return false;
             }
 
+            if (hearts + healthAmount > maxHearts)
+            {
+                return false;
+            }
+            
             hearts += healthAmount;
             
             NotifyHealth();
+
+            return true;
         }
 
-        public void ReceiveCrystals(int quantity)
+        public bool ReceiveCrystals(int quantity)
         {
             crystals += quantity;
             
             NotifyCrystalsQuantity();
+
+            return true;
         }
 
         // Protected methods
