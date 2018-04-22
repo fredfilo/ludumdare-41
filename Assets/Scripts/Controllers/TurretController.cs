@@ -1,4 +1,5 @@
-﻿using Controllers;
+﻿using System.Collections.Generic;
+using Controllers;
 using HitEffects;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class TurretController : MonoBehaviour
     // ------------------------------------------------------
 
     [SerializeField] private bool isActive;
+    [SerializeField] private List<GameObject> targets = new List<GameObject>();
     [SerializeField] private GameObject bulletStart;
     [SerializeField] private GameObject bulletModel;
     [SerializeField] private float fireInterval = 1.0f;
@@ -23,8 +25,7 @@ public class TurretController : MonoBehaviour
     // Private methods
     // ------------------------------------------------------
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (GameController.instance.isPaused)
         {
@@ -43,6 +44,40 @@ public class TurretController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        GameObject otherGameObject = other.gameObject;
+
+        if (!otherGameObject.CompareTag("Enemy"))
+        {
+            return;
+        }
+
+        if (targets.Contains(otherGameObject))
+        {
+            return;
+        }
+        
+        targets.Add(otherGameObject);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        GameObject otherGameObject = other.gameObject;
+
+        if (!otherGameObject.CompareTag("Enemy"))
+        {
+            return;
+        }
+
+        if (!targets.Contains(otherGameObject))
+        {
+            return;
+        }
+
+        targets.Remove(otherGameObject);
+    }
+
     private void Fire()
     {
         if (bulletModel == null || bulletStart == null)
@@ -50,6 +85,13 @@ public class TurretController : MonoBehaviour
             return;
         }
 
+        if (targets.Count == 0)
+        {
+            return;
+        }
+
+        GameObject target = targets[0];
+        
         GameObject bullet = Instantiate(bulletModel, transform);
         bullet.transform.position = bulletStart.transform.position;
 

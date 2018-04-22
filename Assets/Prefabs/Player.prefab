@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1944557571446274}
   m_IsPrefabParent: 1
+--- !u!1 &1137600313338826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4268470846449490}
+  m_Layer: 0
+  m_Name: bulletStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1944557571446274
 GameObject:
   m_ObjectHideFlags: 0
@@ -25,7 +40,7 @@ GameObject:
   - component: {fileID: 61329748844435198}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,10 +52,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944557571446274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.46, y: 3.31, z: 0}
+  m_LocalPosition: {x: -0.8, y: -0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4268470846449490}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4268470846449490
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137600313338826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.16, y: -0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 4259490264578074}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50645384829598736
@@ -104,6 +133,12 @@ MonoBehaviour:
   movementSpeed: 4
   jumpSpeed: 8
   jumpSlowDown: 0.5
+  bulletStart: {fileID: 1137600313338826}
+  bulletModel: {fileID: 1698890053175290, guid: 9e206b12c31fe4c40b6c4b9d7e3ee88d,
+    type: 2}
+  fireInterval: 0.1
+  bulletDamage: 30
+  bulletFreeze: 0
 --- !u!212 &212475694528787180
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -138,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300018, guid: 677b0dac5d16344ba84c97d0d37abf17, type: 3}
+  m_Sprite: {fileID: 21300022, guid: 677b0dac5d16344ba84c97d0d37abf17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

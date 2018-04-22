@@ -15,10 +15,16 @@ namespace Controllers
         public float timeBeforeExplosion = 2.0f;
         public float speed = 1.0f;
         public List<HitEffect> hitEffects = new List<HitEffect>();
+        public List<string> hitIgnoreTags = new List<string>();
 
         // Private methods
         // --------------------------------------------
-        
+
+        private void Awake()
+        {
+            hitIgnoreTags.Add("Projectile");
+        }
+
         private void Update()
         {
             if (GameController.instance.isPaused)
@@ -42,6 +48,11 @@ namespace Controllers
         {
             GameObject otherGameObject = collider.gameObject;
 
+            if (hitIgnoreTags.Contains(otherGameObject.tag))
+            {
+                return;
+            }
+            
             foreach (HitEffect hitEffect in hitEffects)
             {
                 hitEffect.Apply(otherGameObject);
