@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Controllers
 {
@@ -14,6 +15,7 @@ namespace Controllers
         [SerializeField] private GameObject enemyModel;
         [SerializeField] private GameObject facadeLeft;
         [SerializeField] private GameObject facadeRight;
+        [SerializeField] private TextMesh countdownText;
 
         private float lastSpawnTime;
         private List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -33,7 +35,11 @@ namespace Controllers
                 return;
             }
 
-            if (Time.time - lastSpawnTime > spawnInterval)
+            float ellapsedTime = Time.time - lastSpawnTime;
+            float countdown = spawnInterval - ellapsedTime;
+            countdownText.text = Mathf.RoundToInt(countdown).ToString();
+            
+            if (ellapsedTime > spawnInterval)
             {
                 lastSpawnTime = Time.time;
                 SpawnEnemy();
