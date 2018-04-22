@@ -58,6 +58,9 @@ TagManager:
   - name: Player
     uniqueID: 3703280265
     locked: 0
+  - name: StructureFront
+    uniqueID: 3203141705
+    locked: 0
   - name: Items
     uniqueID: 3810042755
     locked: 0

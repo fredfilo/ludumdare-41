@@ -12,6 +12,8 @@ namespace Controllers
         [SerializeField] private float spawnInterval = 3.0f; // Number of seconds between enemies.
         [SerializeField] private float spawnDirection = 1.0f; // 1.0f = right, -1.0f = left.
         [SerializeField] private GameObject enemyModel;
+        [SerializeField] private GameObject facadeLeft;
+        [SerializeField] private GameObject facadeRight;
 
         private float lastSpawnTime;
         private List<GameObject> spawnedEnemies = new List<GameObject>();
@@ -50,6 +52,14 @@ namespace Controllers
             }
             
             spawnedEnemies.Add(enemy);
+
+            IlluminateFacade();
+        }
+
+        private void IlluminateFacade()
+        {
+            facadeLeft.GetComponent<Animator>().Play("Spawning");
+            facadeRight.GetComponent<Animator>().Play("Spawning");
         }
     }
 }
