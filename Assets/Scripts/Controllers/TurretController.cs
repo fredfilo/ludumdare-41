@@ -1,122 +1,159 @@
 ﻿using System.Collections.Generic;
-using Controllers;
 using HitEffects;
+using Interfaces;
+using Notifications;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour
+namespace Controllers
 {
-    // Properties
-    // ------------------------------------------------------
+    public class TurretController : MonoBehaviour, IDamageable, IHealable
+    {
+        // Properties
+        // ------------------------------------------------------
 
-    [SerializeField] private bool isActive;
-    [SerializeField] private List<GameObject> targets = new List<GameObject>();
-    [SerializeField] private GameObject bulletStart;
-    [SerializeField] private GameObject bulletModel;
-    [SerializeField] private float fireInterval = 1.0f;
-    [SerializeField] private float direction = 1.0f;
+        [SerializeField] private bool isActive;
+        [SerializeField] private List<GameObject> targets = new List<GameObject>();
+        [SerializeField] private GameObject bulletStart;
+        [SerializeField] private GameObject bulletModel;
+        [SerializeField] private float fireInterval = 1.0f;
+        [SerializeField] private float direction = 1.0f;
+        [SerializeField] private float health = 1.0f;
     
-    [Header("Bullet Effects")]
+        [Header("Bullet Effects")]
     
-    [SerializeField] private float bulletDamage = 60.0f;
-    [SerializeField] private float bulletFreeze = 0.0f;
+        [SerializeField] private float bulletDamage = 60.0f;
+        [SerializeField] private float bulletFreeze = 0.0f;
 
-    private float lastFire;
+        private float lastFire;
     
-    // Private methods
-    // ------------------------------------------------------
-
-    private void Update()
-    {
-        if (GameController.instance.isPaused)
+        // Public methods
+        // ------------------------------------------------------
+        
+        public void ApplyDamage(float damage)
         {
-            return;
+            if (damage < 0)
+            {
+                return;
+            }
+
+            health -= damage;
+
+            if (health <= 0)
+            {
+                Notification notification = new Notification(Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED);
+                GameController.instance.Broadcaster.Notify(notification);
+
+                Destroy(GetComponent<CapsuleCollider2D>());
+            }
+            
+        }
+
+        public void Heal(float healthAmount)
+        {
+            if (healthAmount < 0)
+            {
+                return;
+            }
+
+            health += healthAmount;
         }
         
-        if (!isActive)
-        {
-            return;
-        }
+        // Private methods
+        // ------------------------------------------------------
 
-        if (Time.time - lastFire > fireInterval)
+        private void Update()
         {
-            lastFire = Time.time;
-            Fire();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        GameObject otherGameObject = other.gameObject;
-
-        if (!otherGameObject.CompareTag("Enemy"))
-        {
-            return;
-        }
-
-        if (targets.Contains(otherGameObject))
-        {
-            return;
-        }
+            if (GameController.instance.isPaused)
+            {
+                return;
+            }
         
-        targets.Add(otherGameObject);
-    }
+            if (!isActive || health <= 0)
+            {
+                return;
+            }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        GameObject otherGameObject = other.gameObject;
-
-        if (!otherGameObject.CompareTag("Enemy"))
-        {
-            return;
+            if (Time.time - lastFire > fireInterval)
+            {
+                lastFire = Time.time;
+                Fire();
+            }
         }
 
-        if (!targets.Contains(otherGameObject))
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            return;
-        }
+            GameObject otherGameObject = other.gameObject;
 
-        targets.Remove(otherGameObject);
-    }
+            if (!otherGameObject.CompareTag("Enemy"))
+            {
+                return;
+            }
 
-    private void Fire()
-    {
-        if (bulletModel == null || bulletStart == null)
-        {
-            return;
-        }
-
-        if (targets.Count == 0)
-        {
-            return;
-        }
-
-        GameObject target = targets[0];
+            if (targets.Contains(otherGameObject))
+            {
+                return;
+            }
         
-        GameObject bulletObject = Instantiate(bulletModel, transform);
-        bulletObject.transform.position = bulletStart.transform.position;
-
-        BulletController bullet = bulletObject.GetComponent<BulletController>();
-        bullet.direction = new Vector2(direction, 0);
-        bullet.hitIgnoreTags.Add("Player");
-        bullet.hitIgnoreTags.Add("ToProtect");
-        AddBulletEffects(bullet);
-    }
-
-    private void AddBulletEffects(BulletController bullet)
-    {
-        if (bullet == null)
-        {
-            return;
+            targets.Add(otherGameObject);
         }
-        
-        if (bulletDamage > 0)
+
+        private void OnTriggerExit2D(Collider2D other)
         {
-            bullet.hitEffects.Add(new DamageEffect(bulletDamage));
+            GameObject otherGameObject = other.gameObject;
+
+            if (!otherGameObject.CompareTag("Enemy"))
+            {
+                return;
+            }
+
+            if (!targets.Contains(otherGameObject))
+            {
+                return;
+            }
+
+            targets.Remove(otherGameObject);
         }
-        
-        if (bulletFreeze > 0)
+
+        private void Fire()
         {
-            bullet.hitEffects.Add(new FreezeEffect(bulletFreeze));
+            if (bulletModel == null || bulletStart == null)
+            {
+                return;
+            }
+
+            if (targets.Count == 0)
+            {
+                return;
+            }
+
+            GameObject target = targets[0];
+        
+            GameObject bulletObject = Instantiate(bulletModel, transform);
+            bulletObject.transform.position = bulletStart.transform.position;
+
+            BulletController bullet = bulletObject.GetComponent<BulletController>();
+            bullet.direction = new Vector2(direction, 0);
+            bullet.hitIgnoreTags.Add("Player");
+            bullet.hitIgnoreTags.Add("DefensiveStructure");
+            AddBulletEffects(bullet);
+        }
+
+        private void AddBulletEffects(BulletController bullet)
+        {
+            if (bullet == null)
+            {
+                return;
+            }
+        
+            if (bulletDamage > 0)
+            {
+                bullet.hitEffects.Add(new DamageEffect(bulletDamage));
+            }
+        
+            if (bulletFreeze > 0)
+            {
+                bullet.hitEffects.Add(new FreezeEffect(bulletFreeze));
+            }
         }
     }
 }

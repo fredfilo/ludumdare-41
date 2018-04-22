@@ -5,7 +5,8 @@
         public enum Type
         {
             GAME_OVER,
-            TO_PROTECT_DESTROYED
+            TO_PROTECT_DESTROYED,
+            DEFENSIVE_STRUCTURE_DESTROYED
         }
     
         // Properties

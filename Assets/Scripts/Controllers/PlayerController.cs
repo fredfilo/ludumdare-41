@@ -88,7 +88,7 @@ namespace Controllers
             bullet.direction = new Vector2(renderer.flipX ? -1.0f : 1.0f, 0);
             bullet.speed *= 1.25f;
             bullet.hitIgnoreTags.Add("Player");
-            bullet.hitIgnoreTags.Add("ToProtect");
+            bullet.hitIgnoreTags.Add("DefensiveStructure");
             AddBulletEffects(bullet);
         }
         

@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4061610548275862}
   - component: {fileID: 212506250685508712}
   - component: {fileID: 114484814435764138}
-  - component: {fileID: 60808622762269230}
+  - component: {fileID: 61555634800654784}
   m_Layer: 0
   m_Name: ToProtect
-  m_TagString: ToProtect
+  m_TagString: DefensiveStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,15 +35,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1468500282927354}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.934, y: 2.568, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.2775307, y: -3.9664989, z: 0.091796875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &60808622762269230
-PolygonCollider2D:
+--- !u!61 &61555634800654784
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -54,7 +54,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.86}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -64,16 +64,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.34375, y: -0.25}
-      - {x: -0.13, y: -0.5}
-      - {x: 0.125, y: -0.5}
-      - {x: 0.34, y: -0.27}
-      - {x: 0.34, y: -0.1875}
-      - {x: 0.0625, y: 0.125}
-      - {x: -0.03125, y: 0.125}
-      - {x: -0.34375, y: -0.1875}
+  serializedVersion: 2
+  m_Size: {x: 1.3, y: 1.72}
+  m_EdgeRadius: 0
 --- !u!114 &114484814435764138
 MonoBehaviour:
   m_ObjectHideFlags: 1
