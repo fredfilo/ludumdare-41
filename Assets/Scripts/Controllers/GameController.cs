@@ -38,6 +38,11 @@ public class GameController : MonoBehaviour, INotifiable
         {
             GameOver();
         }
+        
+        if (notification.type == Notification.Type.PLAYER_DIED)
+        {
+            GameOver();
+        }
     }
 
     public void LoadLevel(int level)
@@ -94,6 +99,7 @@ public class GameController : MonoBehaviour, INotifiable
         
         // Notifications
         Broadcaster.RegisterNotifiable(this, Notification.Type.TO_PROTECT_DESTROYED);
+        Broadcaster.RegisterNotifiable(this, Notification.Type.PLAYER_DIED);
     }
 
     private void Update()

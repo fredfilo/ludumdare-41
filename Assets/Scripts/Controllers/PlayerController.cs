@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HitEffects;
+using Notifications;
 using UnityEngine;
 
 namespace Controllers
@@ -25,6 +26,15 @@ namespace Controllers
             "ToProtect",
             "DefensiveStructure"
         };
+        
+        // Public methods
+        // -----------------------------------
+
+        public void OnDeathAnimationEnded()
+        {
+            Notification notification = new Notification(Notification.Type.PLAYER_DIED);
+            GameController.instance.Broadcaster.Notify(notification);
+        }
         
         // Protected methods
         // -----------------------------------
@@ -82,6 +92,15 @@ namespace Controllers
                     velocity.y *= jumpSlowDown;
                 }
             }
+        }
+
+        protected override void Die()
+        {
+            base.Die();
+
+            GameController.instance.isPaused = true;
+            
+            animator.Play("Death");
         }
 
         // Private methods

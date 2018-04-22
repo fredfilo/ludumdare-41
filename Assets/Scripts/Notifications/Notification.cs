@@ -6,7 +6,8 @@
         {
             GAME_OVER,
             TO_PROTECT_DESTROYED,
-            DEFENSIVE_STRUCTURE_DESTROYED
+            DEFENSIVE_STRUCTURE_DESTROYED,
+            PLAYER_DIED
         }
     
         // Properties
