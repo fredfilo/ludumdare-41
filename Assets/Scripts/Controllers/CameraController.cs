@@ -20,8 +20,11 @@ namespace Controllers
             }
 
             Vector3 targetPosition = target.transform.position;
-            targetPosition.y += 3;
-            transform.position = targetPosition;
+            
+            Vector3 newPosition = transform.position;
+            newPosition.x = targetPosition.x;
+            newPosition.y = targetPosition.y + 3;
+            transform.position = newPosition;
         }
     }
 }
