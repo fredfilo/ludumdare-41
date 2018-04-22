@@ -8,13 +8,15 @@ namespace Controllers
         // ----------------------------------
 
         public GameObject target;
+        public bool followsTarget = true;
+        public float followSpeed = 0.3f;
         
         // Private methods
         // ----------------------------------
         
         private void LateUpdate()
         {
-            if (target == null)
+            if (!followsTarget || target == null)
             {
                 return;
             }
@@ -24,7 +26,7 @@ namespace Controllers
             Vector3 newPosition = transform.position;
             newPosition.x = targetPosition.x;
             newPosition.y = targetPosition.y + 3;
-            transform.position = newPosition;
+            transform.position = Vector3.Lerp(transform.position, newPosition, followSpeed);
         }
     }
 }

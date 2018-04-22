@@ -9,7 +9,8 @@
             DEFENSIVE_STRUCTURE_DESTROYED,
             PLAYER_DIED,
             PLAYER_HEALTH_UPDATED,
-            PLAYER_CRYSTALS_UPDATED
+            PLAYER_CRYSTALS_UPDATED,
+            REQUIRED_CRYSTALS_UPDATED
         }
     
         // Properties

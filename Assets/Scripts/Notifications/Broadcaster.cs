@@ -25,7 +25,7 @@ namespace Notifications
 
             if (!notifiables.Contains(notifiable))
             {
-                Debug.Log("Broadcaster::RegisterNotifiable (type=" + type + ")");
+                //Debug.Log("Broadcaster::RegisterNotifiable (type=" + type + ")");
                 notifiables.Add(notifiable);
             }
         }
@@ -46,11 +46,11 @@ namespace Notifications
             List<INotifiable> notifiables = GetNotifiablesByType(notification.type);
             if (notifiables == null)
             {
-                Debug.Log("Broadcaster::Notify " + notification.type + " : Notifiable list is null.");
+                //Debug.Log("Broadcaster::Notify " + notification.type + " : Notifiable list is null.");
                 return;
             }
 
-            Debug.Log("Broadcaster::Notify " + notification.type + " : " + notifiables.Count);
+            //Debug.Log("Broadcaster::Notify " + notification.type + " : " + notifiables.Count);
             
             foreach (INotifiable notifiable in notifiables)
             {

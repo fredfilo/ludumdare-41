@@ -70,6 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4112108747570354}
   - component: {fileID: 114354523319914012}
+  - component: {fileID: 68045290055290584}
   m_Layer: 0
   m_Name: EnemyGate
   m_TagString: Untagged
@@ -84,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1510919300206978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.2, y: 3, z: 0}
+  m_LocalPosition: {x: -25, y: -1.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4754375937959080}
@@ -132,6 +133,23 @@ Transform:
   m_Father: {fileID: 4112108747570354}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &68045290055290584
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1510919300206978}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.45, y: 0}
+  - {x: 2.45, y: 0}
 --- !u!95 &95731247372025020
 Animator:
   serializedVersion: 3
