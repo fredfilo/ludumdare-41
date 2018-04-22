@@ -17,9 +17,11 @@ namespace Controllers
             if (target == null)
             {
                 return;
-            }        
-            
-            transform.position = target.transform.position;
+            }
+
+            Vector3 targetPosition = target.transform.position;
+            targetPosition.y += 3;
+            transform.position = targetPosition;
         }
     }
 }
