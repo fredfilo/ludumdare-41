@@ -18,6 +18,8 @@ namespace Controllers
         public List<string> hitIgnoreTags = new List<string>();
         public bool isFriendly = false;
 
+        [SerializeField] private GameObject explosionModel;
+
         // Private methods
         // --------------------------------------------
 
@@ -57,6 +59,21 @@ namespace Controllers
             foreach (HitEffect hitEffect in hitEffects)
             {
                 hitEffect.Apply(otherGameObject);
+            }
+            
+            Explode();
+        }
+
+        private void Explode()
+        {
+            if (explosionModel != null)
+            {
+                GameObject explosionObject = Instantiate(explosionModel);
+                explosionObject.transform.position = new Vector3(
+                    transform.position.x + Random.Range(-0.2f, 0.2f),
+                    transform.position.y + Random.Range(-0.2f, 0.2f),
+                    0
+                );
             }
             
             Destroy(gameObject);
