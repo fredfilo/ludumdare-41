@@ -151,11 +151,14 @@ MonoBehaviour:
   movementSpeed: 4
   jumpSpeed: 8
   jumpSlowDown: 0.5
+  health: 100
   bulletStart: {fileID: 1137600313338826}
   bulletModel: {fileID: 1698890053175290, guid: 9e206b12c31fe4c40b6c4b9d7e3ee88d,
     type: 2}
   fireInterval: 0.1
-  bulletDamage: 30
+  hearts: 2
+  crystals: 0
+  bulletDamage: 1
   bulletFreeze: 0
 --- !u!212 &212475694528787180
 SpriteRenderer:

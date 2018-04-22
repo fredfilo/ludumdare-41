@@ -37,9 +37,9 @@ GameObject:
   - component: {fileID: 212016562118508334}
   - component: {fileID: 114725040279251002}
   - component: {fileID: 61260783134925664}
-  - component: {fileID: 70547556879619686}
   - component: {fileID: 50577265591690148}
   - component: {fileID: 95868362419582108}
+  - component: {fileID: 61775645927934126}
   m_Layer: 0
   m_Name: Turret
   m_TagString: DefensiveStructure
@@ -119,8 +119,8 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9, y: 1}
   m_EdgeRadius: 0
---- !u!70 &70547556879619686
-CapsuleCollider2D:
+--- !u!61 &61775645927934126
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -131,9 +131,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.43}
-  m_Size: {x: 0.64, y: 0.85}
-  m_Direction: 0
+  m_Offset: {x: -0.15, y: 0.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!95 &95868362419582108
 Animator:
   serializedVersion: 3
@@ -169,9 +179,9 @@ MonoBehaviour:
     type: 2}
   fireInterval: 1.5
   direction: -1
-  health: 1
-  bulletDamage: 50
-  bulletFreeze: 2
+  health: 300
+  bulletDamage: 100
+  bulletFreeze: 1
 --- !u!212 &212016562118508334
 SpriteRenderer:
   m_ObjectHideFlags: 1

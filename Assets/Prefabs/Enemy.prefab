@@ -122,9 +122,10 @@ MonoBehaviour:
   movementSpeed: 1
   jumpSpeed: 7
   jumpSlowDown: 0.5
+  health: 5000
   direction: 1
   freezeDuration: 0
-  damage: 50
+  damage: 25
 --- !u!212 &212785156463439368
 SpriteRenderer:
   m_ObjectHideFlags: 1

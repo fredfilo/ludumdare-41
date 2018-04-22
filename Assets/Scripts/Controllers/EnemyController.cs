@@ -54,6 +54,16 @@ namespace Controllers
             // Enemies don't jump
         }
 
+        protected override void ComputeVelocity()
+        {
+            base.ComputeVelocity();
+
+            if (velocity.y > 0)
+            {
+                velocity.y = 0;
+            }
+        }
+
         protected override bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal)
         {
             GameObject otherGameObject = hit.collider.gameObject;

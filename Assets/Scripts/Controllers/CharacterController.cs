@@ -16,9 +16,9 @@ namespace Controllers
         [SerializeField] protected float movementSpeed = 1f;
         [SerializeField] protected float jumpSpeed = 7f;
         [SerializeField] protected float jumpSlowDown = 0.5f;
+        [SerializeField] protected float health = 100.0f;
 
         protected SpriteRenderer renderer;
-        protected float health = 100.0f;
         protected Animator animator;
         protected List<string> allowedCollisionTags = new List<string>();
 
