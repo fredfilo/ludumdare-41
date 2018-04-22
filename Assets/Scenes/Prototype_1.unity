@@ -237,6 +237,23 @@ GameObject:
   m_PrefabParentObject: {fileID: 1944557571446274, guid: 64f2d1853100d456c9429d6d475af5af,
     type: 2}
   m_PrefabInternal: {fileID: 1684614034}
+--- !u!95 &288076112
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288076106}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 42d00ee254d144279a18055961201f45, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &305387991 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1691087606980294, guid: b55c6b2d8957447139689f244ea40632,
@@ -576,6 +593,37 @@ Prefab:
     - target: {fileID: 4259490264578074, guid: 64f2d1853100d456c9429d6d475af5af, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212475694528787180, guid: 64f2d1853100d456c9429d6d475af5af,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 140a0a7becfbe4ce4b17623e59082c27,
+        type: 3}
+    - target: {fileID: 61329748844435198, guid: 64f2d1853100d456c9429d6d475af5af,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 0.425
+      objectReference: {fileID: 0}
+    - target: {fileID: 61329748844435198, guid: 64f2d1853100d456c9429d6d475af5af,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61329748844435198, guid: 64f2d1853100d456c9429d6d475af5af,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 61329748844435198, guid: 64f2d1853100d456c9429d6d475af5af,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 61329748844435198, guid: 64f2d1853100d456c9429d6d475af5af,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64f2d1853100d456c9429d6d475af5af, type: 2}

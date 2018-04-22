@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
 using Physics;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Controllers
 
         protected SpriteRenderer renderer;
         protected float health = 100.0f;
+        protected Animator animator;
 
         // Public methods
         // -----------------------------------
@@ -66,13 +68,36 @@ namespace Controllers
         {
             
         }
- 
+
+        protected override void AfterMovement()
+        {
+            base.AfterMovement();
+            CheckAnimations();
+        }
+
         // Private methods
         // -----------------------------------
         
         private void Awake()
         {
             renderer = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
+        }
+
+        private void CheckAnimations()
+        {
+            if (animator == null)
+            {
+                return;
+            }
+
+            bool isMoving = (Math.Abs(velocity.x) > 0.000001f);
+            bool isFalling = !grounded && velocity.y < 0;
+            bool isJumping = !grounded && velocity.y > 0;
+
+            animator.SetBool("isRunning", isMoving);
+            animator.SetBool("isJumping", isJumping);
+            animator.SetBool("isFalling", isFalling);
         }
     }
 }
