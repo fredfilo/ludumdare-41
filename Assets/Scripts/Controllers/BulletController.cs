@@ -84,6 +84,8 @@ namespace Controllers
                     transform.position.y + Random.Range(-0.2f, 0.2f),
                     0
                 );
+                
+                GameController.instance.PlaySound(GameController.Sounds.EXPLOSION);
             }
             
             Destroy(gameObject);

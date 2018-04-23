@@ -11,6 +11,8 @@ namespace Controllers
         // -----------------------------------------
 
         [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private GameObject gamePausedPanel;
+        [SerializeField] private GameObject gameWinPanel;
         [SerializeField] private Image[] playerHearts;
         [SerializeField] private Text crystalsCountText;
         [SerializeField] private Text requiredCrystalsCountText;
@@ -72,11 +74,37 @@ namespace Controllers
                     );
                 }
             }
+
+            if (notification.type == Notification.Type.GAME_PAUSED_ON)
+            {
+                gamePausedPanel.SetActive(true);
+            }
+            
+            if (notification.type == Notification.Type.GAME_PAUSED_OFF)
+            {
+                gamePausedPanel.SetActive(false);
+            }
+            
+            if (notification.type == Notification.Type.GAME_WIN)
+            {
+                gameWinPanel.SetActive(true);
+            }
         }
 
         public void OnRetryLevelButton()
         {
             GameController.instance.RetryLevel();
+        }
+        
+        public void OnQuitButton()
+        {
+            Application.Quit();
+        }
+        
+        public void OnResumeGame()
+        {
+            gamePausedPanel.SetActive(false);
+            GameController.instance.isPaused = false;
         }
 
         // Private methods
@@ -89,6 +117,9 @@ namespace Controllers
             GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.PLAYER_CRYSTALS_UPDATED);
             GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.REQUIRED_CRYSTALS_UPDATED);
             GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.DEFENSE_HEALTH_UPDATED);
+            GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.GAME_PAUSED_ON);
+            GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.GAME_PAUSED_OFF);
+            GameController.instance.Broadcaster.RegisterNotifiable(this, Notification.Type.GAME_WIN);
         }
 
         private void UpdatePlayerHealth(int heartsCount)

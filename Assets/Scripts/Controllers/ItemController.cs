@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Controllers
@@ -42,6 +43,8 @@ namespace Controllers
 
             bool canPickup = true;
             
+            List<GameController.Sounds> sounds = new List<GameController.Sounds>();
+            
             if (health > 0)
             {
                 canPickup &= player.Heal(health);
@@ -50,11 +53,17 @@ namespace Controllers
             if (crystals > 0)
             {
                 canPickup &= player.ReceiveCrystals(crystals);
+                sounds.Add(GameController.Sounds.CRYSTAL_PICKUP);
             }
 
             if (canPickup)
             {
                 animator.Play("Pickup");
+
+                foreach (GameController.Sounds sound in sounds)
+                {
+                    GameController.instance.PlaySound(sound);
+                }
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using Notifications;
@@ -11,7 +12,13 @@ namespace Controllers
     {
         // Static
         // -------------------------------------
-    
+
+        public enum Sounds
+        {
+            EXPLOSION,
+            CRYSTAL_PICKUP
+        }
+        
         public static GameController instance;
     
         // Properties
@@ -25,8 +32,14 @@ namespace Controllers
         [SerializeField] private GameObject enemyGate;
         [SerializeField] private GameObject player;
         
+        [Header("Sounds")]
+        
+        [SerializeField] private AudioClip explosionSound;
+        [SerializeField] private AudioClip crystalPickupSound;
+        
         private List<ToProtectController> toProtects;
         private Broadcaster broadcaster = new Broadcaster();
+        private AudioSource audioSource;
     
         // Property accessors
         // -------------------------------------
@@ -38,7 +51,24 @@ namespace Controllers
 
         // Public methods
         // -------------------------------------
-    
+
+        public void PlaySound(Sounds sound)
+        {
+            switch (sound)
+            {
+                case Sounds.EXPLOSION:
+                    audioSource.clip = explosionSound;
+                    audioSource.Play();
+                    break;
+                case Sounds.CRYSTAL_PICKUP:
+                    audioSource.clip = crystalPickupSound;
+                    audioSource.Play();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("sound", sound, null);
+            }
+        }
+        
         public void OnNotification(Notification notification)
         {
             if (notification.type == Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED)
@@ -47,6 +77,15 @@ namespace Controllers
                 if (destroyedNotification != null && destroyedNotification.defenseType.Equals("Tower"))
                 {
                     GameOver();
+                }
+            }
+            
+            if (notification.type == Notification.Type.PLAYER_CRYSTALS_UPDATED)
+            {
+                PlayerCrystalsNotification crystalsNotification = notification as PlayerCrystalsNotification;
+                if (crystalsNotification != null && crystalsNotification.crystalsQuantity >= requiredCrystals)
+                {
+                    GameWin();
                 }
             }
         
@@ -98,6 +137,7 @@ namespace Controllers
             gameOver = false;
             broadcaster = new Broadcaster();
             toProtects = new List<ToProtectController>();
+            audioSource = GetComponent<AudioSource>();
         
             GameObject[] toProtectsArray = GameObject.FindGameObjectsWithTag("ToProtect");
             foreach (GameObject obj in toProtectsArray)
@@ -112,6 +152,7 @@ namespace Controllers
             // Notifications
             Broadcaster.RegisterNotifiable(this, Notification.Type.DEFENSIVE_STRUCTURE_DESTROYED);
             Broadcaster.RegisterNotifiable(this, Notification.Type.PLAYER_DIED);
+            Broadcaster.RegisterNotifiable(this, Notification.Type.PLAYER_CRYSTALS_UPDATED);
 
             StartCoroutine(FollowPlayer(3.0f));
         }
@@ -127,6 +168,17 @@ namespace Controllers
             if (!gameOver && isStarted && Input.GetKeyDown(KeyCode.Escape))
             {
                 isPaused = !isPaused;
+
+                if (isPaused)
+                {
+                    Notification notification = new Notification(Notification.Type.GAME_PAUSED_ON);
+                    Broadcaster.Notify(notification);
+                }
+                else
+                {
+                    Notification notification = new Notification(Notification.Type.GAME_PAUSED_OFF);
+                    Broadcaster.Notify(notification);
+                }
             }
         }
     
@@ -136,6 +188,15 @@ namespace Controllers
             isPaused = true;
         
             Notification notification = new Notification(Notification.Type.GAME_OVER);
+            Broadcaster.Notify(notification);
+        }
+
+        private void GameWin()
+        {
+            gameOver = true;
+            isPaused = true;
+            
+            Notification notification = new Notification(Notification.Type.GAME_WIN);
             Broadcaster.Notify(notification);
         }
 

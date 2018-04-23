@@ -5,6 +5,9 @@
         public enum Type
         {
             GAME_OVER,
+            GAME_PAUSED_ON,
+            GAME_PAUSED_OFF,
+            GAME_WIN,
             TO_PROTECT_DESTROYED,
             DEFENSIVE_STRUCTURE_DESTROYED,
             PLAYER_DIED,

@@ -40,6 +40,11 @@ namespace Controllers
 
         private void Update()
         {
+            if (GameController.instance.isPaused)
+            {
+                return;
+            }
+            
             if (fireTarget != null)
             {
                 Fire(fireTarget);
