@@ -9,6 +9,8 @@ TagManager:
   - ToProtect
   - DefensiveStructure
   - Item_Health
+  - Wall
+  - Monster
   layers:
   - Default
   - TransparentFX

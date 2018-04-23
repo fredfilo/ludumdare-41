@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Controllers;
 using UnityEngine;
 
@@ -26,6 +27,8 @@ namespace Physics
         protected bool grounded;
         protected Vector2 groundNormal;
         protected bool isEnemy = false;
+        protected bool isMonster = false;
+        protected float startTime;
 
         // Protected methods
         // -----------------------------------
@@ -52,6 +55,12 @@ namespace Physics
             for (int i = 0; i < collisions.Count; i++)
             {
                 RaycastHit2D collision = collisions[i];
+
+                if (collision.collider.gameObject == gameObject)
+                {
+                    continue;
+                }
+                
                 Vector2 normal = collision.normal;
                 if (normal.y > minimumNormalY)
                 {
@@ -90,16 +99,22 @@ namespace Physics
                 }
             }
 
-            float yBefore = rigidBody.position.y;
+            Vector2 previousPosition = rigidBody.position;
             
             rigidBody.position += movement.normalized * distance;
 
-            if (isEnemy && rigidBody.position.y > yBefore)
+            if (isEnemy && rigidBody.position.y > previousPosition.y)
             {
                 rigidBody.position = new Vector3(
                     rigidBody.position.x,
-                    yBefore
+                    previousPosition.y
                 );
+            }
+
+            if (isMonster && Time.time - startTime > 5.0f && !grounded && velocity.y < 0)
+            {
+                rigidBody.position = previousPosition;
+                OnCharacterFlip();
             }
         }
 
@@ -113,6 +128,11 @@ namespace Physics
             
         }
         
+        protected virtual void OnCharacterFlip()
+        {
+            
+        }
+        
         protected virtual bool ShouldAllowCollision(RaycastHit2D hit, Vector2 normal, Vector2 movement)
         {
             return false;
@@ -120,6 +140,8 @@ namespace Physics
         
         protected virtual void Start()
         {
+            startTime = Time.time;
+            
             contactFilter.useTriggers = false;
             contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
             // TODO: Setup Physics2D's collision matrix.

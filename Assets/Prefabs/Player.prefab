@@ -156,7 +156,7 @@ MonoBehaviour:
   bulletModel: {fileID: 1698890053175290, guid: 9e206b12c31fe4c40b6c4b9d7e3ee88d,
     type: 2}
   fireInterval: 0.1
-  hearts: 1
+  hearts: 2
   maxHearts: 3
   crystals: 0
   bulletDamage: 1
